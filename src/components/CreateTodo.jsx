@@ -10,8 +10,8 @@ const CreateTodo = ({ tasks, setTasks }) => {
     if (task.name.length < 3) {
       return toast.error("The task must have more than 3 characters");
     }
-    if (task.name.length > 20) {
-      return toast.error("The task must not be more than 20");
+    if (task.name.length > 50) {
+      return toast.error("The task must not be more than 30");
     }
     setTasks((prev) => {
       console.log("the previous task state is: ", prev);

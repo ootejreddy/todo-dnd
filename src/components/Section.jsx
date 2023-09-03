@@ -8,6 +8,7 @@ const Section = ({ status, tasks, inProgress, closed, setTasks, todos }) => {
   let bg = "bg-purple-500";
   let tasksToMap = todos;
 
+  //* helper function to drop the item
   const addItemToDrop = (id) => {
     console.log("dropped id:", id, status);
     setTasks((prev) => {
@@ -49,6 +50,7 @@ const Section = ({ status, tasks, inProgress, closed, setTasks, todos }) => {
         isOver ? "w-[400px]" : ""
       }`}
     >
+      {/* header component */}
       <Header text={text} bg={bg} count={tasksToMap.length}></Header>
       {tasksToMap.length > 0 &&
         tasksToMap.map((task) => (

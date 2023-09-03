@@ -12,7 +12,7 @@ const TaskCard = ({ task, id, tasks, setTasks }) => {
     }),
   }));
 
-  console.log("dragging", isDragging);
+  console.log("dragging is: ", isDragging);
 
   const handleDelete = (id) => {
     console.log("The id to delete is: ", id);
