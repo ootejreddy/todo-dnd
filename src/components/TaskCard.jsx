@@ -1,18 +1,34 @@
 import React from "react";
 import { pickRandomColor } from "../utils/pickRandomColor";
+import { useDrag } from "react-dnd";
+import toast from "react-hot-toast";
 
-const TaskCard = ({ task, key, tasks, setTasks }) => {
+const TaskCard = ({ task, id, tasks, setTasks }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "task",
+    item: { id: id },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  console.log("dragging", isDragging);
+
   const handleDelete = (id) => {
     console.log("The id to delete is: ", id);
     const filteredTasks = tasks.filter((task) => task.id !== id);
     localStorage.setItem("tasks", filteredTasks);
+    toast("task deleted", { icon: "❌" });
     setTasks(filteredTasks);
   };
   const color = pickRandomColor().trim();
   console.log("The color is:", color);
   return (
     <div
-      className={`relative p-4 mt-5 shadow-md rounded-md cursor-grab bg-blue-300`}
+      ref={drag}
+      className={`relative p-4 mt-5 shadow-md rounded-md cursor-grab bg-blue-300 ${
+        isDragging ? "opacity-25" : "opacity-100"
+      }`}
     >
       <input
         value={task.name}
