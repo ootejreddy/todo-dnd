@@ -10,6 +10,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   console.log("tasks are: ", tasks);
 
+  //* this useEffect help us to persist data in localstorage
   useEffect(() => {
     if (localStorage.getItem("tasks")) {
       setTasks(JSON.parse(localStorage.getItem("tasks")));
