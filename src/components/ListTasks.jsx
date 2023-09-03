@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Section from "./Section";
+import { Droppable } from "react-beautiful-dnd";
 
 const ListTasks = ({ tasks, setTasks }) => {
   const [todos, setTodos] = useState([]);
