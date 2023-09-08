@@ -3,14 +3,17 @@ import Section from "./Section";
 import { Droppable } from "react-beautiful-dnd";
 
 const ListTasks = ({ tasks, setTasks }) => {
+  console.log("The tasks from list component is ", tasks);
   const [todos, setTodos] = useState([]);
   const [inProgress, setInprogress] = useState([]);
   const [closed, setClosed] = useState([]);
   useEffect(() => {
     console.log("use effect called from listTasks.js");
-    setTodos(tasks.filter((task) => task.status === "todo"));
-    setInprogress(tasks.filter((task) => task.status === "inprogress"));
-    setClosed(tasks.filter((task) => task.status === "closed"));
+    if (tasks !== undefined) {
+      setTodos(tasks.filter((task) => task.status === "todo"));
+      setInprogress(tasks.filter((task) => task.status === "inprogress"));
+      setClosed(tasks.filter((task) => task.status === "closed"));
+    }
   }, [tasks]);
 
   const states = ["todo", "inprogress", "closed"];

@@ -5,17 +5,28 @@ import CreateTodo from "./components/CreateTodo";
 import ListTasks from "./components/ListTasks";
 import toast, { Toaster } from "react-hot-toast";
 import { DragDropContext } from "react-beautiful-dnd";
+import axios from "axios";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  console.log("tasks are: ", tasks);
+  const [mount, setMount] = useState();
+  const [tasks, setTasks] = useState();
 
+  // console.log("tasks are: ", tasks);
+  // console.log("component rendered");
   //* this useEffect help us to persist data in localstorage
   useEffect(() => {
-    if (localStorage.getItem("tasks")) {
-      setTasks(JSON.parse(localStorage.getItem("tasks")));
-    }
-  }, []);
+    setMount(false);
+    const url = "http://localhost:8080/tasks";
+    axios
+      .get(url)
+      .then((res) => {
+        console.log("The response of get data is: ", res.data);
+        setTasks(res.data);
+      })
+      .catch((err) => console.log("error fetching data", err));
+  }, [mount]);
+
+  // console.log("The todos data from the spring server is ", tasks);
 
   const dragHandler = (result) => {
     const { source, destination } = result;
@@ -45,7 +56,7 @@ function App() {
     <DragDropContext onDragEnd={dragHandler}>
       <Toaster />
       <div className="flex flex-col items-center pt-3 gap-20 mt-20 h-full">
-        <CreateTodo tasks={tasks} setTasks={setTasks}></CreateTodo>
+        <CreateTodo setMount={setMount}></CreateTodo>
         <ListTasks tasks={tasks} setTasks={setTasks}></ListTasks>
         {/* <button onClick={handleButton}>click</button> */}
       </div>
