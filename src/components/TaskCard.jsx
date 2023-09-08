@@ -35,6 +35,7 @@ const TaskCard = ({ task, id, tasks, setTasks, index }) => {
       `http://localhost:8080/task/${id}`,
       task
     );
+    toast("task has been updated to the database", { icon: "✅" });
     console.log("the updated response is: ", updateResponse);
   });
 

@@ -28,7 +28,9 @@ const CreateTodo = ({ setMount }) => {
     } catch (err) {
       console.log("couldn't able to get the request ", err);
     }
+
     setMount(true);
+    setTask({ name: "", status: "todo" });
     toast.success("task created");
   };
 
