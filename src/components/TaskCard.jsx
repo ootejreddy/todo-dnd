@@ -2,13 +2,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { pickRandomColor } from "../utils/pickRandomColor";
 import toast from "react-hot-toast";
 import axios from "axios";
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-} from "react";
+import { useState, useRef } from "react";
 const TaskCard = ({ task, id, tasks, setTasks, index }) => {
   const [input, setInput] = useState(task.name);
   const InputRef = useRef(task.name);
