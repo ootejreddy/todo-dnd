@@ -4,9 +4,13 @@ import toast from "react-hot-toast";
 import { Droppable } from "react-beautiful-dnd";
 
 const Section = ({ status, tasks, inProgress, closed, setTasks, todos }) => {
+  // console.log("section component rendered");
+
   let text = "todo";
   let bg = "bg-purple-500";
   let tasksToMap = todos;
+  // console.log("todos to map is ", tasksToMap);
+  // console.log("The length of tasks to map is ", tasksToMap.length);
 
   // const addItemToDrop = (id) => {
   //   console.log("dropped id:", id, status);
@@ -54,6 +58,7 @@ const Section = ({ status, tasks, inProgress, closed, setTasks, todos }) => {
           {tasksToMap.length > 0 &&
             tasksToMap.map((task, index) => (
               <TaskCard
+                key={index}
                 index={index}
                 task={task}
                 id={task.id}
