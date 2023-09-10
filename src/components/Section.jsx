@@ -47,22 +47,29 @@ const Section = ({ status, tasks, inProgress, closed, setTasks, todos }) => {
   }
 
   return (
-    <div
-      className={`bg-slate-100 w-[300px]  text-sm  h-[650px] rounded-xl text-center  shadow-xl`}
-    >
-      <Header text={text} bg={bg} count={tasksToMap.length}></Header>
-      {tasksToMap.length > 0 &&
-        tasksToMap.map((task, index) => (
-          <TaskCard
-            key={index}
-            index={index}
-            task={task}
-            id={task.id}
-            tasks={tasks}
-            setTasks={setTasks}
-          ></TaskCard>
-        ))}
-    </div>
+    <Droppable droppableId={status}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          className={`bg-slate-100 w-[300px]  text-sm  h-[650px] rounded-xl text-center  shadow-xl`}
+        >
+          <Header text={text} bg={bg} count={tasksToMap.length}></Header>
+          {tasksToMap.length > 0 &&
+            tasksToMap.map((task, index) => (
+              <TaskCard
+                key={index}
+                index={index}
+                task={task}
+                id={task.id}
+                tasks={tasks}
+                setTasks={setTasks}
+              ></TaskCard>
+            ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };
 

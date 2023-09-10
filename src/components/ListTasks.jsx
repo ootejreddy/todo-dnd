@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Section from "./Section";
-import { Droppable } from "react-beautiful-dnd";
 
 const ListTasks = ({ tasks, setTasks }) => {
   console.log("The tasks from list component is ", tasks);
