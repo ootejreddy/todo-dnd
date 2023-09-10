@@ -59,18 +59,6 @@ function App() {
         setTasks(res.data);
       })
       .catch((err) => console.log("error fetching data", err));
-
-    // setTasks((prev) => {
-    //   const updateTaskSection = prev.map((task) => {
-    //     if (task.id === result.draggableId) {
-    //       return { ...task, status: destination.droppableId };
-    //     }
-    //     return task;
-    //   });
-    //   localStorage.setItem("tasks", JSON.stringify(updateTaskSection));
-    //   toast("task status changed", { icon: "🥳" });
-    //   return updateTaskSection;
-    // });
   };
 
   return (
