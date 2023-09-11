@@ -1,19 +1,55 @@
 import { Draggable } from "react-beautiful-dnd";
 import { pickRandomColor } from "../utils/pickRandomColor";
 import toast from "react-hot-toast";
-
+import axios from "axios";
+import { useState, useRef } from "react";
 const TaskCard = ({ task, id, tasks, setTasks, index }) => {
-  const handleDelete = (id) => {
-    console.log("The id to delete is: ", id);
-    const filteredTasks = tasks.filter((task) => task.id !== id);
-    localStorage.setItem("tasks", filteredTasks);
-    toast("task deleted", { icon: "❌" });
-    setTasks(filteredTasks);
+  const [input, setInput] = useState(task.name);
+  console.log("The task is: ", task);
+  console.log("Task card component rendered");
+
+  // useEffect(() => {
+  //   console.log("use effect called from task card");
+  // }, [input]);
+
+  function debounce(cb, delay = 1000) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      setTimeout(() => {
+        cb(...args);
+      }, delay);
+    };
+  }
+
+  const updateDataBase = debounce(async (input) => {
+    task.name = input;
+    const updateResponse = await axios.put(
+      `http://localhost:8080/task/${id}`,
+      task
+    );
+    toast("task has been updated to the database", { icon: "✅" });
+    console.log("the updated response is: ", updateResponse);
+  });
+
+  const updateTaskHandler = (event) => {
+    setInput(event.target.value);
+    updateDataBase(event.target.value);
   };
-  const color = pickRandomColor().trim();
-  console.log("The color is:", color);
+
+  const handleDelete = async (id) => {
+    // console.log("The id to delete is: ", id);
+    // const filteredTasks = tasks.filter((task) => task.id !== id);
+    const deleteResp = await axios.delete(`http://localhost:8080/task/${id}`);
+    // console.log("The delete response is: ", deleteResp);
+    const updatedTaskData = await axios.get("http://localhost:8080/tasks");
+    setTasks(updatedTaskData.data);
+    toast("task deleted", { icon: "❌" });
+  };
+  // const color = pickRandomColor().trim();
+  // console.log("The color is:", color);
   return (
-    <Draggable draggableId={id} key={id} index={index}>
+    <Draggable draggableId={id.toString()} key={id} index={index}>
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -22,9 +58,12 @@ const TaskCard = ({ task, id, tasks, setTasks, index }) => {
           className={`relative p-4 mt-5 shadow-md rounded-md cursor-grab bg-blue-300`}
         >
           <input
-            value={task.name}
+            type="text"
+            value={input}
             className={`font-semibold  border-none  text-black outline-none bg-blue-300`}
+            onChange={updateTaskHandler}
           ></input>
+
           <button
             className="absolute bottom-1 right-1"
             onClick={() => handleDelete(task.id)}
